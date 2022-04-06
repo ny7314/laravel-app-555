@@ -3,7 +3,7 @@ services:
   web:
     image: nginx:1.15.6
     ports:
-      - "8000:80"
+      - "8081:80"
     depends_on: # 追加
       - app
     volumes:
@@ -18,12 +18,12 @@ services:
   mysql:
     image: mysql:5.7
     environment:
-      MYSQL_DATABASE: ****
-      MYSQL_USER: ****
-      MYSQL_PASSWORD: ****
-      MYSQL_ROOT_PASSWORD: ****
+      MYSQL_DATABASE: laravel-bbs555
+      MYSQL_USER: yagunori
+      MYSQL_PASSWORD: yagunori
+      MYSQL_ROOT_PASSWORD: yagunori
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - mysql-data:/var/lib/mysql
 volumes:
