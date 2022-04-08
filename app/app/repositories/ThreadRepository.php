@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Thread;
+use Carbon\Carbon;
 
 class ThreadRepository
 {
@@ -16,5 +17,17 @@ class ThreadRepository
   public function create(array $data)
   {
     return $this->thread->create($data);
+  }
+
+  public function findById(int $id)
+  {
+    return $this->thread->find($id);
+  }
+
+  public function updateTime(int $id)
+  {
+    $thread = $this->findById($id);
+    $thread->latest_comment_time = Carbon::now();
+    return $thread->save();
   }
 }

@@ -8,6 +8,8 @@ use App\Repositories\ThreadRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Models\Message;
+use App\Models\Thread;
 
 class ThreadService
 {

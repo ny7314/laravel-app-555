@@ -27,7 +27,7 @@
 @endif
 
 @if (count($errors) > 0)
-<div class="alert alert-danger alert-block">
+<div class="alert alert-danger alert-block justify-content-center">
   <button type="button" class="btn-close" data-dismiss="alert"></button>
   @foreach ($errors->all() as $error)
   <strong>{{$error}}</strong>

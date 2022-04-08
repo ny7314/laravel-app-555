@@ -1,7 +1,7 @@
 up:
 	docker-compose up -d
 down:
-	docker-compose down -v
+	docker-compose down
 ps:
 	docker-compose ps
 app-laravel:

@@ -3,23 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\ThreadRequest;
+use App\Http\Requests\MessageRequest;
 use App\Services\ThreadService;
+use App\Services\MessageService;
 use App\Models\Message;
 use App\Models\Thread;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
-class ThreadController extends Controller
+class MessageController extends Controller
 {
-    protected $thread_service;
+
+    protected $message_service;
 
     public function __construct(
-        ThreadService $thread_service
+        MessageService $message_service
     )
     {
-        $this->middleware('auth')->except('index');
-        $this->thread_service = $thread_service;
+        $this->middleware('auth');
+        $this->message_service = $message_service;
     }
     /**
      * Display a listing of the resource.
@@ -28,8 +30,7 @@ class ThreadController extends Controller
      */
     public function index()
     {
-        $threads = Thread::orderBy('latest_comment_time', 'desc')->paginate(3);
-        return view('threads.index', compact('threads'));
+        //
     }
 
     /**
@@ -48,17 +49,16 @@ class ThreadController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ThreadRequest $request)
+    public function store(MessageRequest $request, int $id)
     {
         try {
-            $data = $request->only(
-                ['title', 'content']
-            );
-            $this->thread_service->createNewThread($data, Auth::id());
+            $data = $request->validated();
+            $data['user_id'] = Auth::id();
+            $this->message_service->createNewMessage($data, $id);
         } catch (Exception $error){
-            return redirect()->route('threads.index')->with('error', '新規投稿に失敗しました。');
+            return redirect()->route('threads.index')->with('error', 'メッセージの投稿に失敗しました。');
         }
-        return redirect()->route('threads.index')->with('success', '新規投稿しました。');
+        return redirect()->route('threads.index')->with('success', 'メッセージの投稿に成功しました。');
     }
 
     /**

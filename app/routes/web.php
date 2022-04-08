@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ThreadController;
+use App\Http\Controllers\MessageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +23,5 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-// Route::get('/threads', [ThreadController::class, 'index'])->name('index');
-// Route::post('/threads', [ThreadController::class, 'store'])->name('store');
 Route::resource('/threads', ThreadController::class);
+Route::resource('/threads/{thread}/messages', MessageController::class);
