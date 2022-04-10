@@ -4796,7 +4796,7 @@ textarea.form-control-lg {
 
 .pagination {
   display: flex;
-  padding-left: 220px;
+  padding-left: 110px;
   list-style: none;
 }
 
@@ -4912,9 +4912,9 @@ textarea.form-control-lg {
 
 .alert {
   position: relative;
+  left: 110px;
   padding: 1rem 1rem;
   margin-bottom: 1rem;
-  margin-left: 220px;
   border: 1px solid transparent;
   border-radius: 0.25rem;
 }

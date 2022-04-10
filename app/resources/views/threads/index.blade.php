@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@inject('message_serveice', 'App\Services\MessageService')
 
 @section('content')
 <div class="container">
@@ -10,7 +11,7 @@
   </div>
   <div class="row justify-content-center">
     @foreach ($threads as $thread)
-      <div class="col-md-8 mb-5">
+      <div class="col-md-10 mb-5">
         <div class="card text-center">
           <div class="card-header">
             <h3><span class="badge badge-primary">{{ $thread->messages->count() }}<small>メッセージ</small></span></h3>
@@ -22,7 +23,7 @@
           @endif
             <div class="card-body">
               <h5 class="card-title">{{ $loop->iteration }} {{ $message->user->name }}：{{ $message->created_at }}</h5>
-              <p class="card-text">{{ $message->body }}</p>
+              <p class="card-text">{!! $message_serveice->convertUrl($message->body) !!}</p>
             </div>
           @endforeach
         </div>
@@ -35,7 +36,8 @@
             </div>
             <button type="submit" class="btn btn-primary">書き込む</button>
           </form>
-          <a href="#">再読み込み</a>
+          <a href="{{ route('threads.show', $thread->id) }}">メッセージ一覧</a>
+          <a href="{{ route('threads.index') }}">再読み込み</a>
         </div>
       </div>
     @endforeach

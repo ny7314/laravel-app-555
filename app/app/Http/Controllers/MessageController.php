@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Requests\MessageRequest;
 use App\Services\ThreadService;
 use App\Services\MessageService;
-use App\Models\Message;
-use App\Models\Thread;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -56,9 +54,9 @@ class MessageController extends Controller
             $data['user_id'] = Auth::id();
             $this->message_service->createNewMessage($data, $id);
         } catch (Exception $error){
-            return redirect()->route('threads.index')->with('error', 'メッセージの投稿に失敗しました。');
+            return redirect()->route('threads.show', $id)->with('error', 'メッセージの投稿に失敗しました。');
         }
-        return redirect()->route('threads.index')->with('success', 'メッセージの投稿に成功しました。');
+        return redirect()->route('threads.show', $id)->with('success', 'メッセージの投稿に成功しました。');
     }
 
     /**

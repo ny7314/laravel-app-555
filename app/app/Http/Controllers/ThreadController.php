@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\ThreadRequest;
 use App\Services\ThreadService;
+use App\Repositories\ThreadRepository;
 use App\Models\Message;
 use App\Models\Thread;
 use Carbon\Carbon;
@@ -14,12 +15,16 @@ class ThreadController extends Controller
 {
     protected $thread_service;
 
+    protected $thread_repository;
+
     public function __construct(
-        ThreadService $thread_service
+        ThreadService $thread_service,
+        ThreadRepository $thread_repository
     )
     {
         $this->middleware('auth')->except('index');
         $this->thread_service = $thread_service;
+        $this->thread_repository = $thread_repository;
     }
     /**
      * Display a listing of the resource.
@@ -69,7 +74,9 @@ class ThreadController extends Controller
      */
     public function show($id)
     {
-        //
+        $thread = $this->thread_repository->findById($id);
+        $thread->load('messages.user');
+        return view('threads.show', compact('thread'));
     }
 
     /**
